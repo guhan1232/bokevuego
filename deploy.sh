@@ -149,9 +149,17 @@ build_project() {
     
     # 构建后端
     log_info "编译后端程序..."
+    log_info "设置 Go 代理加速..."
+    export GOPROXY=https://goproxy.cn,direct
+    export GO111MODULE=on
+    
     cd server
-    go mod download
-    go build -o bokeui ./cmd
+    log_info "下载 Go 依赖（首次可能需要几分钟）..."
+    go mod download 2>&1 | while read line; do
+        log_info "  $line"
+    done || true
+    log_info "开始编译..."
+    go build -v -o bokeui ./cmd
     chmod +x bokeui
     cd ..
     log_success "后端编译完成"
@@ -159,14 +167,14 @@ build_project() {
     # 构建前端
     log_info "构建管理后台..."
     cd admin
-    npm install
+    npm install --registry=https://registry.npmmirror.com
     npm run build
     cd ..
     log_success "管理后台构建完成"
     
     log_info "构建前台页面..."
     cd web
-    npm install
+    npm install --registry=https://registry.npmmirror.com
     npm run build
     cd ..
     log_success "前台页面构建完成"
