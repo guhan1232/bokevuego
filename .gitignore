@@ -1,0 +1,68 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+admin/dist/
+web/dist/
+server/bokeui
+server/bokeui.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go
+server/vendor/
+*.test
+*.out
+go.work
+
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+backup_*.tar.gz
+
+# Codebuddy
+.codebuddy/
