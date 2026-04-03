@@ -7,7 +7,7 @@
           <div class="logo-wrapper">
             <div class="logo-emblem">
               <img v-if="siteConfig.site_logo" :src="siteConfig.site_logo" :alt="siteConfig.site_title || 'BokeUI 博客'" class="logo-image" />
-              <span v-else>✍</span>
+              <span v-else>墨</span>
             </div>
             <div class="logo-text">
               <h1>{{ siteConfig.site_title || 'BokeUI 博客' }}</h1>

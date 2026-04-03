@@ -7,7 +7,7 @@
           <div class="logo-wrapper">
             <div class="logo-emblem">
               <img v-if="siteConfig.site_logo" :src="siteConfig.site_logo" :alt="siteConfig.site_title || 'BokeUI 博客'" class="logo-image" />
-              <span v-else>✍</span>
+              <span v-else>墨</span>
             </div>
             <div class="logo-text">
               <h1>{{ siteConfig.site_title || 'BokeUI 博客' }}</h1>
@@ -184,77 +184,88 @@ const handleSearch = () => {
 
 <style scoped>
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-dark);
-  margin-bottom: 8px;
+  color: var(--ink-black);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  padding: 12px 16px;
+  border: 2px solid var(--paper-dark);
+  border-radius: var(--radius);
   font-size: 14px;
-  font-family: inherit;
-  transition: border-color 0.2s;
+  font-family: "Noto Serif SC", serif;
+  background: var(--paper-white);
+  transition: all 0.3s ease;
   outline: none;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--primary-blue);
+  border-color: var(--ink-black);
+  box-shadow: var(--shadow);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
 }
 
 .form-actions {
   display: flex;
-  gap: 15px;
-  margin-top: 30px;
+  gap: 20px;
+  margin-top: 32px;
 }
 
 .submit-btn,
 .reset-btn {
-  padding: 10px 30px;
+  padding: 12px 32px;
   font-size: 14px;
-  border: none;
-  border-radius: 4px;
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: 1px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .submit-btn {
-  background: var(--primary-blue);
-  color: #fff;
+  background: var(--ink-black);
+  color: var(--paper-white);
+  border-color: var(--ink-black);
 }
 
 .submit-btn:hover:not(:disabled) {
-  background: var(--nav-hover);
+  background: var(--seal-red);
+  border-color: var(--seal-red);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 .reset-btn {
-  background: #f5f5f5;
-  color: var(--text-gray);
-  border: 1px solid var(--border-color);
+  background: var(--paper-cream);
+  color: var(--ink-medium);
+  border-color: var(--paper-dark);
 }
 
 .reset-btn:hover {
-  background: #e8e8e8;
+  background: var(--paper-warm);
+  border-color: var(--ink-light);
 }
 
 .toast-message {
@@ -262,12 +273,15 @@ const handleSearch = () => {
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 12px 24px;
-  background: var(--primary-blue);
-  color: #fff;
-  border-radius: 4px;
+  padding: 14px 28px;
+  background: var(--ink-black);
+  color: var(--paper-white);
+  border-radius: var(--radius);
   font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--paper-dark);
   z-index: 1000;
   animation: fadeInDown 0.3s ease;
 }

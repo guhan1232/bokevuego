@@ -7,7 +7,7 @@
           <div class="logo-wrapper">
             <div class="logo-emblem">
               <img v-if="siteConfig.site_logo" :src="siteConfig.site_logo" :alt="siteConfig.site_title || 'BokeUI 博客'" class="logo-image" />
-              <span v-else>✍</span>
+              <span v-else>墨</span>
             </div>
             <div class="logo-text">
               <h1>{{ siteConfig.site_title || 'BokeUI 博客' }}</h1>
@@ -188,33 +188,41 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
-  border-top: 1px solid var(--border-color);
+  gap: 24px;
+  padding: 28px;
+  border-top: 2px dashed var(--border);
 }
 
 .page-btn {
-  padding: 8px 16px;
-  background: var(--primary-blue);
-  color: #fff;
-  border: none;
-  border-radius: 3px;
+  padding: 10px 24px;
+  background: var(--ink-black);
+  color: var(--paper-white);
+  border: 2px solid var(--ink-black);
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.2s;
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
 
 .page-btn:hover:not(:disabled) {
-  background: var(--nav-hover);
+  background: var(--seal-red);
+  border-color: var(--seal-red);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .page-btn:disabled {
-  background: #ccc;
+  background: var(--paper-dark);
+  border-color: var(--paper-dark);
   cursor: not-allowed;
+  transform: none;
 }
 
 .page-info {
   font-size: 14px;
-  color: var(--text-gray);
+  color: var(--text-secondary);
+  letter-spacing: 1px;
 }
 </style>

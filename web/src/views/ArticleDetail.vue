@@ -7,7 +7,7 @@
           <div class="logo-wrapper">
             <div class="logo-emblem">
               <img v-if="siteConfig.site_logo" :src="siteConfig.site_logo" :alt="siteConfig.site_title || 'BokeUI 博客'" class="logo-image" />
-              <span v-else>✍</span>
+              <span v-else>墨</span>
             </div>
             <div class="logo-text">
               <h1>{{ siteConfig.site_title || 'BokeUI 博客' }}</h1>
@@ -148,17 +148,20 @@ onMounted(async () => {
 
 <style scoped>
 .article-footer {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 2px dashed var(--border);
 }
 
 .article-tag {
   display: inline-block;
-  padding: 4px 12px;
-  background: #f0f0f0;
-  color: var(--text-gray);
-  border-radius: 3px;
-  font-size: 13px;
+  padding: 8px 20px;
+  background: var(--paper-cream);
+  color: var(--seal-red);
+  border: 2px solid var(--seal-red);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: 1px;
 }
 </style>
