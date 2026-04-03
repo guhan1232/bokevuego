@@ -2,6 +2,7 @@ package router
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -15,6 +16,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
+
+// 辅助函数：检查文件是否存在
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
+}
 
 func SetupRouter(db *sql.DB) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
@@ -42,12 +49,20 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 	articleH.SetToolsHandler(toolsH)
 
 	// 初始化 IP 地理位置查询服务
-	wd, _ := os.Getwd()
+	// 优先使用可执行文件路径来定位项目根目录
 	var projectRoot string
-	if strings.HasSuffix(filepath.Base(wd), "server") {
-		projectRoot = filepath.Dir(wd)
+	execPath, err := os.Executable()
+	if err == nil {
+		// 可执行文件在 server 目录下，项目根目录是其父目录
+		projectRoot = filepath.Dir(filepath.Dir(execPath))
 	} else {
-		projectRoot = wd
+		// 回退到工作目录
+		wd, _ := os.Getwd()
+		if strings.HasSuffix(filepath.Base(wd), "server") {
+			projectRoot = filepath.Dir(wd)
+		} else {
+			projectRoot = wd
+		}
 	}
 	xdbPath := filepath.Join(projectRoot, "server", "data", "ip2region.xdb")
 	service.InitIPRegion(xdbPath)
@@ -139,9 +154,19 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 	adminIndex := filepath.Join(adminDist, "index.html")
 	webIndex := filepath.Join(webDist, "index.html")
 
+	// 打印调试信息
+	log.Printf("[BokeUI] 项目根目录: %s", projectRoot)
+	log.Printf("[BokeUI] Admin 目录: %s", adminDist)
+	log.Printf("[BokeUI] Web 目录: %s", webDist)
+	log.Printf("[BokeUI] Admin index.html 存在: %v", fileExists(adminIndex))
+	log.Printf("[BokeUI] Web index.html 存在: %v", fileExists(webIndex))
+
 	// 1) 先注册静态文件（优先级高于 NoRoute）
 	if info, err := os.Stat(adminDist); err == nil && info.IsDir() {
 		r.Static("/admin", adminDist)
+		log.Printf("[BokeUI] 已注册 /admin 静态文件服务")
+	} else {
+		log.Printf("[BokeUI] 警告: admin/dist 目录不存在: %v", err)
 	}
 	if info, err := os.Stat(webDist); err == nil && info.IsDir() {
 		// 用 http.FileSystem 正确设置 MIME type
@@ -152,6 +177,9 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 		r.GET("/favicon.ico", func(c *gin.Context) {
 			c.FileFromFS("favicon.ico", fs)
 		})
+		log.Printf("[BokeUI] 已注册 web 静态文件服务")
+	} else {
+		log.Printf("[BokeUI] 警告: web/dist 目录不存在: %v", err)
 	}
 
 	// 2) NoRoute 作为 SPA fallback
