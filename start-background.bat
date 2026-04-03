@@ -1,29 +1,17 @@
 @echo off
 chcp 65001 >nul
+setlocal enabledelayedexpansion
+
 echo ================================
-echo   BokeUI Blog - 快速启动
+echo   BokeUI Blog - 后台启动
 echo ================================
 echo.
 
 set "ROOT_DIR=%~dp0"
 cd /d "%ROOT_DIR%"
 
-:: 检查是否已构建
-if not exist "admin\dist" (
-    echo [警告] 管理后台未构建
-    echo 请先运行 start.bat 进行完整构建
-    pause
-    exit /b 1
-)
-
-if not exist "web\dist" (
-    echo [警告] 前台页面未构建
-    echo 请先运行 start.bat 进行完整构建
-    pause
-    exit /b 1
-)
-
-:: 编译后端
+:: 检查并编译后端
+echo 检查后端程序...
 cd /d "%ROOT_DIR%server"
 if not exist "bokeui.exe" (
     echo 后端程序未编译，正在编译...
@@ -35,16 +23,20 @@ if not exist "bokeui.exe" (
     )
 )
 
-:: 启动服务
+:: 后台启动服务
 echo 启动服务中...
+start "BokeUI Server" bokeui.exe
+
 echo.
+echo ================================
+echo   服务已在后台启动！
 echo ================================
 echo   前台: http://localhost:9088
 echo   后台: http://localhost:9088/admin
 echo   账号: admin / admin123
 echo ================================
 echo.
-echo 按 Ctrl+C 可停止服务
+echo 服务运行在新窗口中
+echo 关闭窗口或按 Ctrl+C 可停止服务
 echo.
-
-bokeui.exe
+pause
